@@ -1,0 +1,475 @@
+#X3D V3.3 utf8
+
+
+Viewpoint {
+    position 0 0 400  
+    description "Widok z przodu"
+}
+
+Viewpoint {
+    position 0 400 0  
+    orientation 1 0 0 -1.57 
+    description "Widok z góry"
+}
+
+Viewpoint {
+    position 0 0 0 
+    description "Widok ze Słońca"
+}
+
+PointLight { 
+    color 1 1 0
+    intensity 1
+    location 0 20 0
+    on TRUE 
+    radius 100
+}
+
+DEF Slonce Transform{
+    children[
+        Transform{
+            translation 0 0 0
+            children[
+                Shape{
+                    appearance Appearance{
+                        texture ImageTexture{
+                            url "sun.jpg"
+                        }
+                        material Material{
+                            diffuseColor 1 1 0
+                        }
+                    }
+                    geometry Sphere{
+                        radius 20
+                    }
+                }
+            ]
+        }
+    ]
+}
+
+DEF Merkury Transform{
+    translation 35 0 0
+	center -35 0 0
+    children[
+        DEF Merkury2 Transform{
+            children[
+                Shape{
+                    appearance Appearance{
+                        texture ImageTexture{
+                            url "2k_mercury.jpg"
+                        }
+                        material Material{
+                            diffuseColor 0.5 0.5 0.5
+                        }
+                    }
+                    geometry Sphere{
+                        radius 0.5
+                    }
+                }
+            ]
+        }
+    ]
+}
+
+DEF Wenus Transform{
+    translation 45 0 0
+	center -45 0 0
+    children[
+        DEF Wenus2 Transform{
+            children[
+                Shape{
+                    appearance Appearance{
+                        texture ImageTexture{
+                            url "2k_venus_atmosphere.jpg"
+                        }
+                        material Material{
+                            diffuseColor 1.0, 0.992, 0.816
+                        }
+                    }
+                    geometry Sphere{
+                        radius 1
+                    }
+                }
+            ]
+        }
+    ]
+}
+
+DEF Ziemia Transform{
+    translation 55 0 0
+	center -55 0 0
+    children[
+        DEF Ziemia2 Transform{
+            children[
+                Shape{
+                    appearance Appearance{
+                        texture ImageTexture{
+                            url "2k_earth_daymap.jpg"
+                        }
+                        material Material{
+                            diffuseColor 0 0 1
+                        }
+                    }
+                    geometry Sphere{
+                        radius 1
+                    }
+                }
+            ]
+        }
+    ]
+}
+
+DEF Mars Transform{
+    translation 65 0 0
+	center -65 0 0
+    children[
+        DEF Mars2 Transform{
+            children[
+                Shape{
+                    appearance Appearance{
+                        texture ImageTexture{
+                            url "2k_mars.jpg"
+                        }
+                        material Material{
+                            diffuseColor 1 0.5 0
+                        }
+                    }
+                    geometry Sphere{
+                        radius 0.5
+                    }
+                }
+            ]
+        }
+    ]
+}
+
+DEF Jowisz Transform{
+    translation 75 0 0
+	center -75 0 0
+    children[
+        DEF Jowisz2 Transform{
+            children[
+                Shape{
+                    appearance Appearance{
+                        texture ImageTexture{
+                            url "2k_jupiter.jpg"
+                        }
+                        material Material{
+                            diffuseColor 0.65, 0.16, 0.16
+                        }
+                    }
+                    geometry Sphere{
+                        radius 5
+                    }
+                }
+            ]
+        }
+    ]
+}
+
+DEF Saturn Transform{
+    translation 91 0 0
+	center -91 0 0
+    children[
+        DEF Saturn2 Transform{
+            children[
+                Shape{
+                    appearance Appearance{
+                        texture ImageTexture{
+                            url "2k_saturn.jpg"
+                        }
+                        material Material{
+                            diffuseColor 1.0, 0.992, 0.816
+                        }
+                    }
+                    geometry Sphere{
+                        radius 4
+                    }
+                }
+            ]
+        }
+    ]
+}
+
+DEF SaturnPierscien Transform{
+    translation 91 0 0
+	center -91 0 0
+    children[
+        DEF SaturnPierscien2 Transform{
+            children[
+                Shape{
+                    appearance Appearance{
+                        texture ImageTexture{
+                            url "2k_saturn_ring_alpha.png"
+                        }
+                        material Material{}
+                    }
+                    geometry Cylinder{
+                        radius 7
+                        height 1
+                    }
+                }
+            ]
+        }
+    ]
+}
+
+DEF Uran Transform{
+    translation 102 0 0
+	center -102 0 0
+    children[
+        DEF Uran2 Transform{
+            children[
+                Shape{
+                    appearance Appearance{
+                        texture ImageTexture{
+                            url "2k_uranus.jpg"
+                        }
+                        material Material{
+                            emissiveColor 0 0 1
+                        }
+                    }
+                    geometry Sphere{
+                        radius 2.5
+                    }
+                }
+            ]
+        }
+    ]
+}
+
+DEF Neptun Transform{
+    translation 111 0 0
+	center -111 0 0
+    children[
+        DEF Neptun2 Transform{
+            children[
+                Shape{
+                    appearance Appearance{
+                        texture ImageTexture{
+                            url "2k_neptune.jpg"
+                        }
+                        material Material{
+                            diffuseColor 0 0 1
+                        }
+                    }
+                    geometry Sphere{
+                        radius 2
+                    }
+                }
+            ]
+        }
+    ]
+}
+
+# Obrot wokol osi slonca
+DEF ObrotSlonca OrientationInterpolator{
+	key [0, 0.25, 0.5, 0.75, 1]
+	keyValue [0 1 0 0,0 1 0 -1.57,0 1 0 -3.14,0 1 0 -4.71,0 1 0 -6.28]
+}
+DEF CzasSlonca TimeSensor{
+	loop TRUE
+	cycleInterval 10
+}
+ROUTE CzasSlonca.fraction_changed TO ObrotSlonca.set_fraction
+ROUTE ObrotSlonca.value_changed TO Slonce.set_rotation
+
+DEF ObrotMerkury OrientationInterpolator {
+    key [0, 0.25, 0.5, 0.75, 1]
+    keyValue [0 1 0 0, 0 1 0 1.57, 0 1 0 3.14, 0 1 0 4.71, 0 1 0 6.28]
+}
+DEF CzasMerkury TimeSensor {
+    loop TRUE
+    cycleInterval 5
+}
+ROUTE CzasMerkury.fraction_changed TO ObrotMerkury.set_fraction
+ROUTE ObrotMerkury.value_changed TO Merkury.set_rotation
+
+DEF ObrotWenus OrientationInterpolator {
+    key [0, 0.25, 0.5, 0.75, 1]
+    keyValue [0 1 0 0, 0 1 0 -1.57, 0 1 0 -3.14, 0 1 0 -4.71, 0 1 0 -6.28]
+}
+DEF CzasWenus TimeSensor {
+    loop TRUE
+    cycleInterval 6
+}
+ROUTE CzasWenus.fraction_changed TO ObrotWenus.set_fraction
+ROUTE ObrotWenus.value_changed TO Wenus.set_rotation
+
+DEF ObrotZiemia OrientationInterpolator {
+	key [0, 0.25, 0.5, 0.75, 1]
+	keyValue [0 1 0 0,0 1 0 1.57,0 1 0 3.14,0 1 0 4.71,0 1 0 6.28]
+}
+DEF CzasZiemia TimeSensor {
+    loop TRUE
+    cycleInterval 7
+}
+ROUTE CzasZiemia.fraction_changed TO ObrotZiemia.set_fraction
+ROUTE ObrotZiemia.value_changed TO Ziemia.set_rotation
+
+DEF ObrotMars OrientationInterpolator {
+	key [0, 0.25, 0.5, 0.75, 1]
+	keyValue [0 1 0 0,0 1 0 1.57,0 1 0 3.14,0 1 0 4.71,0 1 0 6.28]
+}
+DEF CzasMars TimeSensor {
+    loop TRUE
+    cycleInterval 8
+}
+ROUTE CzasMars.fraction_changed TO ObrotMars.set_fraction
+ROUTE ObrotMars.value_changed TO Mars.set_rotation
+
+DEF ObrotJowisz OrientationInterpolator {
+	key [0, 0.25, 0.5, 0.75, 1]
+	keyValue [0 1 0 0,0 1 0 1.57,0 1 0 3.14,0 1 0 4.71,0 1 0 6.28]
+}
+DEF CzasJowisz TimeSensor {
+    loop TRUE
+    cycleInterval 9
+}
+ROUTE CzasJowisz.fraction_changed TO ObrotJowisz.set_fraction
+ROUTE ObrotJowisz.value_changed TO Jowisz.set_rotation
+
+DEF ObrotSaturn OrientationInterpolator {
+	key [0, 0.25, 0.5, 0.75, 1]
+	keyValue [0 1 0 0,0 1 0 1.57,0 1 0 3.14,0 1 0 4.71,0 1 0 6.28]
+}
+DEF CzasSaturn TimeSensor {
+    loop TRUE
+    cycleInterval 10
+}
+ROUTE CzasSaturn.fraction_changed TO ObrotSaturn.set_fraction
+ROUTE ObrotSaturn.value_changed TO Saturn.set_rotation
+
+DEF ObrotSaturnPierscien OrientationInterpolator {
+	key [0, 0.25, 0.5, 0.75, 1]
+	keyValue [0 1 0 0,0 1 0 1.57,0 1 0 3.14,0 1 0 4.71,0 1 0 6.28]
+}
+DEF CzasSaturnPierscien TimeSensor {
+    loop TRUE
+    cycleInterval 10
+}
+ROUTE CzasSaturnPierscien.fraction_changed TO ObrotSaturnPierscien.set_fraction
+ROUTE ObrotSaturnPierscien.value_changed TO SaturnPierscien.set_rotation
+
+DEF ObrotUran OrientationInterpolator {
+	key [0, 0.25, 0.5, 0.75, 1]
+	keyValue [0 1 0 0,0 1 0 1.57,0 1 0 3.14,0 1 0 4.71,0 1 0 6.28]
+}
+DEF CzasUran TimeSensor {
+    loop TRUE
+    cycleInterval 11
+}
+ROUTE CzasUran.fraction_changed TO ObrotUran.set_fraction
+ROUTE ObrotUran.value_changed TO Uran.set_rotation
+
+DEF ObrotNeptun OrientationInterpolator {
+	key [0, 0.25, 0.5, 0.75, 1]
+	keyValue [0 1 0 0,0 1 0 1.57,0 1 0 3.14,0 1 0 4.71,0 1 0 6.28]
+}
+DEF CzasNeptun TimeSensor {
+    loop TRUE
+    cycleInterval 12
+}
+ROUTE CzasNeptun.fraction_changed TO ObrotNeptun.set_fraction
+ROUTE ObrotNeptun.value_changed TO Neptun.set_rotation
+
+# Obrot wokol wlasnych osi
+DEF ObrotOsiMerkury OrientationInterpolator {
+    key [0, 0.25, 0.5, 0.75, 1]
+    keyValue [0 1 0 0, 0 1 0 1.57, 0 1 0 3.14, 0 1 0 4.71, 0 1 0 6.28]
+}
+DEF CzasObrotuMerkury TimeSensor {
+    loop TRUE
+    cycleInterval 2
+}
+ROUTE CzasObrotuMerkury.fraction_changed TO ObrotOsiMerkury.set_fraction
+ROUTE ObrotOsiMerkury.value_changed TO Merkury2.set_rotation
+
+DEF ObrotOsiWenus OrientationInterpolator {
+    key [0, 0.25, 0.5, 0.75, 1]
+    keyValue [0 1 0 0, 0 1 0 1.57, 0 1 0 3.14, 0 1 0 4.71, 0 1 0 6.28]
+}
+DEF CzasObrotuWenus TimeSensor {
+    loop TRUE
+    cycleInterval 3
+}
+ROUTE CzasObrotuWenus.fraction_changed TO ObrotOsiWenus.set_fraction
+ROUTE ObrotOsiWenus.value_changed TO Wenus2.set_rotation
+
+DEF ObrotOsiZiemia OrientationInterpolator {
+    key [0, 0.25, 0.5, 0.75, 1]
+    keyValue [0 1 0 0, 0 1 0 1.57, 0 1 0 3.14, 0 1 0 4.71, 0 1 0 6.28]
+}
+DEF CzasObrotuZiemia TimeSensor {
+    loop TRUE
+    cycleInterval 4
+}
+ROUTE CzasObrotuZiemia.fraction_changed TO ObrotOsiZiemia.set_fraction
+ROUTE ObrotOsiZiemia.value_changed TO Ziemia2.set_rotation
+
+DEF ObrotOsiMars OrientationInterpolator {
+    key [0, 0.25, 0.5, 0.75, 1]
+    keyValue [0 1 0 0, 0 1 0 1.57, 0 1 0 3.14, 0 1 0 4.71, 0 1 0 6.28]
+}
+DEF CzasObrotuMars TimeSensor {
+    loop TRUE
+    cycleInterval 5
+}
+ROUTE CzasObrotuMars.fraction_changed TO ObrotOsiMars.set_fraction
+ROUTE ObrotOsiMars.value_changed TO Mars2.set_rotation
+
+DEF ObrotOsiJowisz OrientationInterpolator {
+    key [0, 0.25, 0.5, 0.75, 1]
+    keyValue [0 1 0 0, 0 1 0 1.57, 0 1 0 3.14, 0 1 0 4.71, 0 1 0 6.28]
+}
+DEF CzasObrotuJowisz TimeSensor {
+    loop TRUE
+    cycleInterval 2
+}
+ROUTE CzasObrotuJowisz.fraction_changed TO ObrotOsiJowisz.set_fraction
+ROUTE ObrotOsiJowisz.value_changed TO Jowisz2.set_rotation
+
+DEF ObrotOsiSaturn OrientationInterpolator {
+    key [0, 0.25, 0.5, 0.75, 1]
+    keyValue [0 1 0 0, 0 1 0 1.57, 0 1 0 3.14, 0 1 0 4.71, 0 1 0 6.28]
+}
+DEF CzasObrotuSaturn TimeSensor {
+    loop TRUE
+    cycleInterval 3
+}
+ROUTE CzasObrotuSaturn.fraction_changed TO ObrotOsiSaturn.set_fraction
+ROUTE ObrotOsiSaturn.value_changed TO Saturn2.set_rotation
+
+DEF ObrotOsiSaturnPierscien OrientationInterpolator {
+    key [0, 0.25, 0.5, 0.75, 1]
+    keyValue [0 1 0 0, 0 1 0 1.57, 0 1 0 3.14, 0 1 0 4.71, 0 1 0 6.28]
+}
+DEF CzasObrotuSaturnPierscien TimeSensor {
+    loop TRUE
+    cycleInterval 3
+}
+ROUTE CzasObrotuSaturnPierscien.fraction_changed TO ObrotOsiSaturnPierscien.set_fraction
+ROUTE ObrotOsiSaturnPierscien.value_changed TO SaturnPierscien2.set_rotation
+
+DEF ObrotOsiUran OrientationInterpolator {
+    key [0, 0.25, 0.5, 0.75, 1]
+    keyValue [0 1 0 0, 0 1 0 1.57, 0 1 0 3.14, 0 1 0 4.71, 0 1 0 6.28]
+}
+DEF CzasObrotuUran TimeSensor {
+    loop TRUE
+    cycleInterval 6
+}
+ROUTE CzasObrotuUran.fraction_changed TO ObrotOsiUran.set_fraction
+ROUTE ObrotOsiUran.value_changed TO Uran2.set_rotation
+
+DEF ObrotOsiNeptun OrientationInterpolator {
+    key [0, 0.25, 0.5, 0.75, 1]
+    keyValue [0 1 0 0, 0 1 0 1.57, 0 1 0 3.14, 0 1 0 4.71, 0 1 0 6.28]
+}
+DEF CzasObrotuNeptun TimeSensor {
+    loop TRUE
+    cycleInterval 5
+}
+ROUTE CzasObrotuNeptun.fraction_changed TO ObrotOsiNeptun.set_fraction
+ROUTE ObrotOsiNeptun.value_changed TO Neptun2.set_rotation
